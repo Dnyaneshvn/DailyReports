@@ -1,0 +1,51 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Reports</h1>
+
+        <form action="{{ url_for('add_report') }}" method="post">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" name="customer_name" required>
+
+            <label for="product_name">Product Name:</label>
+            <input type="text" name="product_name" required>
+
+            <label for="total_amount">Total Amount:</label>
+            <input type="number" name="total_amount" step="0.01" required>
+
+            <button type="submit" class="btn">Add Report</button>
+        </form>
+
+        <h2>Reports</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Product Name</th>
+                <th>Total Amount</th>
+                <th>Date</th>
+            </tr>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.customer_name }}</td>
+                <td>{{ report.product_name }}</td>
+                <td>{{ report.total_amount }}</td>
+                <td>{{ report.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="{{ url_for('download_reports') }}" download="reports.xlsx" class="btn download-btn">Download Reports</a>
+    </div>
+</body>
+</html>
